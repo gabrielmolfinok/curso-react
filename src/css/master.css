@@ -15,10 +15,12 @@ body {
 }
 
 #locations article {
-    margin: 0 15px 10px 0;
+    width: 350px;
+    margin: 0 15px 15px 0;
     padding: 30px;
     background: white;
     border-radius: 10px;
     display: inline-block;
+    text-align: left;
     box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1);
 }
