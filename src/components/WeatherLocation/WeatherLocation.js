@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from 'material-ui/CircularProgress';
 import Location from '../Location';
-import WeatherData from './WeatherData/WeatherData';
+import WeatherData from './WeatherData';
 import transformWeather from '../../services/transformWeather';
 
 // API Key: 9f9bf20d2777bf64d19e49f0563b03cf
