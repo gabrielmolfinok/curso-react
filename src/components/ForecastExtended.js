@@ -7,24 +7,8 @@ import ForecastItem from './ForecastItem'
 
 import transformForecast from './../services/transformForecast'
 
-// const days = [
-//     'Lunes',
-//     'Martes',
-//     'Miercoles',
-//     'Jueves',
-//     'Viernes'
-// ]
-
-// const data = {
-//     temperature: 10,
-//     humidity: 10,
-//     weatherState: 'normal',
-//     wind: '10m/s'
-// }
-
-
 const api_key = '9f9bf20d2777bf64d19e49f0563b03cf'
-const url = `http://api.openweathermap.org/data/2.5/forecast`
+const url = 'http://api.openweathermap.org/data/2.5/forecast'
 
 export default class ForecastExtended extends Component {
 
@@ -44,15 +28,33 @@ export default class ForecastExtended extends Component {
 
     renderProgress = () => <h3>Cargando pronostico extendido...</h3>
 
-    componentDidMount = () => {
+    updateCity = city => {
 
-        const url_forecast = `${ url }?q=${ this.props.city }&appid=${ api_key }`
+        const url_forecast = `${ url }?q=${ city }&appid=${ api_key }`
       
         axios( url_forecast )
             .then( res => this.setState({ forecastData: transformForecast(res.data) }) )
             .catch( err => console.log(err) )
 
-    }    
+    }
+
+    componentDidUpdate = prevProps => {
+      
+        if (prevProps.city !== this.props.city) {
+
+            // Limpiamos el STATE para que aparezca el 'Loading...'
+            this.setState({ forecastData: null })
+
+            return this.updateCity( this.props.city )
+
+        }
+            
+        return
+
+    }
+    
+
+    componentDidMount = () => this.updateCity( this.props.city )
 
     render() {
 
