@@ -12,12 +12,9 @@ const api_key = '9f9bf20d2777bf64d19e49f0563b03cf';
 
 export default class WeatherLocation extends Component {
 
-    constructor({ city }) {
-        super();
-        this.state = {
-            city,
-            data: null
-        }
+    state = {
+        city: this.props.city,
+        data: null
     }
 
     handleUpdateClick = e => {
@@ -26,13 +23,11 @@ export default class WeatherLocation extends Component {
         const api_weather = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api_key}`;
 
         fetch(api_weather)
-            .then(data => {
-                return data.json()
-            })
-            .then(weather_data => {
-                const data = transformWeather(weather_data);
-                this.setState({ data });
-            });
+        .then( data => data.json() )
+        .then(weather_data => {
+            const data = transformWeather(weather_data)
+            this.setState({ data })
+        })
 
     }
     
