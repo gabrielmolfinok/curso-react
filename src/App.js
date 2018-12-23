@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react'
+import { createStore } from 'redux'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Paper from '@material-ui/core/Paper'
@@ -17,11 +18,21 @@ const cities = [
     "Buenos Aires,ar"
 ]
 
+const store = createStore( () => {}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() )
+
+const setCity = value => ({ type: 'setCity', value })
+
 class App extends Component {
 
-    state = { city: '' }
+    state = { city: null }
 
-    handleSelectedLocation = city => this.setState({ city })
+    handleSelectedLocation = city => {
+
+        this.setState({ city })
+        
+        store.dispatch( setCity(city) )
+
+    }
 
     render() {
         return ( 
@@ -46,7 +57,9 @@ class App extends Component {
                             </div>                    
                         </Col>
                         <Col xs={12} md={6}>
-                            <Paper> { this.state.city && <ForecastExtended city={this.state.city}></ForecastExtended> } </Paper>
+                            <Paper>
+                                { this.state.city && <ForecastExtended city={this.state.city}></ForecastExtended> }
+                            </Paper>
                         </Col>
                     </Row>
                 </Grid>
