@@ -1,38 +1,25 @@
 
 import React, { Component } from 'react'
-import { createStore } from 'redux'
 
+// Material UI          
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Paper from '@material-ui/core/Paper'
-import AppBar from '@material-ui/core/AppBar'
+import AppBar  from '@material-ui/core/AppBar'
 import Typography from '@material-ui/core/Typography'
 import Toolbar from '@material-ui/core/Toolbar'
 
+// React Grid System        
 import { Grid, Row, Col } from 'react-flexbox-grid'
 
-import ForecastExtended from './components/ForecastExtended'
-import LocationList from './components/LocationList'
+import ForecastExtendedContainer from './containers/ForecastExtendedContainer'
+import LocationListContainer from './containers/LocationListContainer'
 
 const cities = [
     "Montevideo,uy",
     "Buenos Aires,ar"
 ]
 
-const store = createStore( () => {}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() )
-
-const setCity = value => ({ type: 'setCity', value })
-
-class App extends Component {
-
-    state = { city: null }
-
-    handleSelectedLocation = city => {
-
-        this.setState({ city })
-        
-        store.dispatch( setCity(city) )
-
-    }
+export default class App extends Component {
 
     render() {
         return ( 
@@ -51,14 +38,12 @@ class App extends Component {
                     <Row>
                         <Col xs={12} md={6}>
                             <div id="locations">
-                                <LocationList
-                                    cities={cities}
-                                    onSelectedLocation={this.handleSelectedLocation} /> 
+                                <LocationListContainer cities={cities} /> 
                             </div>                    
                         </Col>
                         <Col xs={12} md={6}>
                             <Paper>
-                                { this.state.city && <ForecastExtended city={this.state.city}></ForecastExtended> }
+                                <ForecastExtendedContainer />
                             </Paper>
                         </Col>
                     </Row>
@@ -68,5 +53,3 @@ class App extends Component {
         )
     }
 }
-
-export default App
